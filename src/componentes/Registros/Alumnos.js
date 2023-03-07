@@ -30,9 +30,19 @@ import EditarActividad                  from './EditarActividad';
 import Examen                           from './Examen';
 import Desempeño                        from './Desempeño';
 
+import RegistrarCalificacion                   from './RegistrarCalificacion';
+
+import RegistrarAsistencia                   from './RegistrarAsistencia';
+
+
 class Alumnos extends Component {
 
-	constructor(props) {
+  	constructor(props) {
+
+        if (typeof window !== 'undefined') {
+            sessionStorage.setItem('id_profesor', 101);
+            sessionStorage.setItem('id_periodo',   1);
+        }
 
         super(props);
 
@@ -62,6 +72,8 @@ class Alumnos extends Component {
             sortField:              null,
 
             displayBasic:           false,
+            displayRegistrarCalificacion:           false,
+            displayRegistrarAsistencia: false,
             displayActividad:       false,
             displayExamen:          false,
             displayDesempeño:       false,
@@ -196,7 +208,17 @@ class Alumnos extends Component {
                                                                                     <div id="columna1">{item.dia}</div>
                                                                                 </div>
                                                                                 <div id="contenidos">
-                                                                                    <div id="columna1">{item.asistencia}</div>
+                                                                                    
+                                                                                    <Button label   ={item.asistencia} 
+                                                                                            onClick ={() => {
+                                                                                                    this.onClick('displayRegistrarAsistencia');
+                                                                                                    if (typeof window !== 'undefined') {
+                                                                                                        sessionStorage.setItem('id_dia',        item.id);
+                                                                                                        sessionStorage.setItem('id_alumno',     rowData.matricula);  
+                                                                                                    }
+                                                                                                }
+                                                                                            } 
+                                                                                    />  
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -221,8 +243,7 @@ class Alumnos extends Component {
                                                 
                                                 id_profesor:    Number(this.state.id_profesor_activo),
                                                 id_materia:     Number(this.state.selectedMateria.id),
-                                                id_grupo:       Number(this.state.selectedGrupo.id),
-                                                id_ponderador:  Number('1')
+                                                id_grupo:       Number(this.state.selectedGrupo.id)
                                             }} >
                                             {({ loading, error, data }) => {
                                         
@@ -245,7 +266,19 @@ class Alumnos extends Component {
                                                                                     <div id="columna1">{item.descripcion}</div>
                                                                                 </div>
                                                                                 <div id="contenidos">
-                                                                                    <div id="columna1">{item.calificacion}</div>
+                                                                                    
+                                                                                    <Button label   ={item.calificacion} 
+                                                                                            onClick ={() => {
+                                                                                                    this.onClick('displayRegistrarCalificacion');
+                                                                                                    if (typeof window !== 'undefined') {
+                                                                                                        sessionStorage.setItem('id_alumno',     rowData.matricula);
+                                                                                                        sessionStorage.setItem('id_actividad',  item.id);
+                                                                                                        sessionStorage.setItem('actividadDescripcion', item.descripcion);
+                                                                                                    }
+
+                                                                                                }
+                                                                                            } 
+                                                                                    />  
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -269,8 +302,7 @@ class Alumnos extends Component {
 
                                                 id_profesor:    Number(this.state.id_profesor_activo),
                                                 id_materia:     Number(this.state.selectedMateria.id),
-                                                id_grupo:       Number(this.state.selectedGrupo.id),
-                                                id_ponderador: Number('1')
+                                                id_grupo:       Number(this.state.selectedGrupo.id)
                                             }} >
                                             {({ loading, error, data }) => {
                                         
@@ -293,7 +325,19 @@ class Alumnos extends Component {
                                                                                     <div id="columna1">{item.descripcion}</div>
                                                                                 </div>
                                                                                 <div id="contenidos">
-                                                                                    <div id="columna1">{item.calificacion}</div>
+                                                                                    
+                                                                                    <Button label   ={item.calificacion} 
+                                                                                            onClick ={() => {
+                                                                                                    this.onClick('displayRegistrarCalificacion');
+                                                                                                    if (typeof window !== 'undefined') {
+                                                                                                        sessionStorage.setItem('id_alumno',     rowData.matricula);
+                                                                                                        sessionStorage.setItem('id_actividad',  item.id);
+                                                                                                        sessionStorage.setItem('actividadDescripcion', item.descripcion);
+                                                                                                    }
+
+                                                                                                }
+                                                                                            } 
+                                                                                    />  
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -317,8 +361,7 @@ class Alumnos extends Component {
 
                                                 id_profesor:    Number(this.state.id_profesor_activo),
                                                 id_materia:     Number(this.state.selectedMateria.id),
-                                                id_grupo:       Number(this.state.selectedGrupo.id),
-                                                id_ponderador: Number('1')
+                                                id_grupo:       Number(this.state.selectedGrupo.id)
                                             }} >
                                             {({ loading, error, data }) => {
                                         
@@ -341,7 +384,19 @@ class Alumnos extends Component {
                                                                                     <div id="columna1">{item.descripcion}</div>
                                                                                 </div>
                                                                                 <div id="contenidos">
-                                                                                    <div id="columna1">{item.calificacion}</div>
+                                                                                    
+                                                                                    <Button label   ={item.calificacion} 
+                                                                                            onClick ={() => {
+                                                                                                    this.onClick('displayRegistrarCalificacion');
+                                                                                                    if (typeof window !== 'undefined') {
+                                                                                                        sessionStorage.setItem('id_alumno',     rowData.matricula);
+                                                                                                        sessionStorage.setItem('id_actividad',  item.id);
+                                                                                                        sessionStorage.setItem('actividadDescripcion', item.descripcion);
+                                                                                                    }
+
+                                                                                                }
+                                                                                            } 
+                                                                                    />  
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -625,6 +680,44 @@ class Alumnos extends Component {
                 </div>
 
                 <br />    
+
+                <Dialog     header="Registrar calificación" 
+                            style={{ width: '25vw' }} 
+                            visible={this.state.displayRegistrarCalificacion}
+                            modal 
+                            footer={this.renderFooter} 
+                            onHide={() => this.onHide('displayRegistrarCalificacion')}
+                            draggable={false} 
+                            resizable={false}
+                >
+                    <RegistrarCalificacion                              
+                        cerrar         = 'displayRegistrarCalificacion'
+                        onHide         ={this.onHide} 
+                        />
+                </Dialog>               
+
+                <Dialog     header="Registrar asistencia" 
+                            style={{ width: '25vw' }} 
+                            visible={this.state.displayRegistrarAsistencia}
+                            modal 
+                            footer={this.renderFooter} 
+                            onHide={() => this.onHide('displayRegistrarAsistencia')}
+                            draggable={false} 
+                            resizable={false}
+                >
+                    <RegistrarAsistencia                              
+                        cerrar         = 'displayRegistrarAsistencia'
+                        onHide         ={this.onHide} 
+                        />
+                </Dialog>
+
+
+
+
+
+
+
+
 
                 <Dialog   header="Actividades" 
                         style={{ width: '50vw' }} 

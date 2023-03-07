@@ -1,21 +1,21 @@
 
-import React, { Component, Fragment }                       from 'react';
-import { withRouter, Redirect }                             from 'react-router-dom';
-import { Query, Mutation }                                  from 'react-apollo';
-import ApolloClient                                         from 'apollo-boost';
-import { InMemoryCache }                                    from 'apollo-cache-inmemory';
+import React, { Component, Fragment }       from 'react';
+import { withRouter, Redirect }             from 'react-router-dom';
+import { Query, Mutation }                  from 'react-apollo';
+import ApolloClient                         from 'apollo-boost';
+import { InMemoryCache }                    from 'apollo-cache-inmemory';
 
-import { Dialog }                                           from 'primereact/dialog';
-import { Button }                                           from 'primereact/button';
-import { DataTable }                                        from 'primereact/datatable';
-import { Column }                                           from 'primereact/column';
-import { Dropdown }                                         from 'primereact/dropdown';
+import { Dialog }                           from 'primereact/dialog';
+import { Button }                           from 'primereact/button';
+import { DataTable }                        from 'primereact/datatable';
+import { Column }                           from 'primereact/column';
+import { Dropdown }                         from 'primereact/dropdown';
 
-import Swal                                                 from 'sweetalert2';
+import Swal                                 from 'sweetalert2';
 
-import { REGISTRAR_PONDERADOR }                            from '../../mutations';
+import { REGISTRAR_ACTIVIDAD }              from '../../mutations';
 
-import { QUERY_CATALOGO_PONDERADOR }                          from '../../queries';
+import { QUERY_CATALOGO_PONDERADOR }        from '../../queries';
 
 import '../css/Header.css';
 import '../css/DropdownDemo.css';
@@ -29,18 +29,18 @@ class CrearPonderador extends Component {
 
         this.state = {
             
-            id_parcial:         typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_parcial')) : null,            
-            id_materia:         typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_materia')) : null,   
-            id_grupo:           typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_grupo')) : null,   
-            id_materia_grupo:   null,   
+            id_materia:     typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_materia')) : null,   
+            id_grupo:       typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_grupo')) : null,   
+            id_profesor:    typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_profesor')) : null,   
+
             selectedPonderador: null,
-            descripcion:        null
+            descripcion:        null,
+
+            id_parcial:         typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_parcial')) : null,            
+            id_periodo:         typeof window !== 'undefined' ? Number(sessionStorage.getItem('id_periodo')) : null,    
         };
 
         this.onPonderadorChange    = this.onPonderadorChange.bind(this);      
-        
-        // this.onClick            = this.onClick.bind(this);
-        // this.onHide             = this.onHide.bind(this);     
     }
 
     onPonderadorChange(e) {
@@ -117,7 +117,7 @@ class CrearPonderador extends Component {
                 
                     <Mutation 
                         // client={client}
-                        mutation = { REGISTRAR_PONDERADOR }
+                        mutation = { REGISTRAR_ACTIVIDAD }
                         onCompleted = {() => {
                                 // localStorage.setItem('abrePantalla', 0);
                                 this.props.onHide(this.props.cerrar);
@@ -128,38 +128,45 @@ class CrearPonderador extends Component {
                             }
                         }
                     >    
-                        { crearActualizarPonderador => (
+                        { crearActualizarActividad => (
 
                             <form className="col-md-11 m-3" 
                                 onSubmit = {
                                     e => {
                                         e.preventDefault();
 
-                                        const { id_parcial            
-                                                ,id_materia_grupo   
-                                                ,id_materia
-                                                ,id_grupo
-                                                ,selectedPonderador 
-                                                ,descripcion
-                                        } = this.state;
+                                        const { 
+                                            selectedPonderador,  
+                                            descripcion,    
+                                                                                        
+                                            id_materia,     
+                                            id_grupo,       
+                                            id_profesor,    
+                                                                                        
+                                            id_parcial,     
+                                            id_periodo      
+                                    } = this.state;
 
                                         this.setState({
                                             error: false
                                         })
 
-                                        const PonderadorInput = {
-                                            id_parcial            
-                                            ,id_materia_grupo   
-                                            ,id_materia
-                                            ,id_grupo
-                                            ,id_ponderador:   Number(selectedPonderador.id)
-                                            ,descripcion            
+                                        const ActividadInput = {
+                                            id_ponderador:      Number(selectedPonderador.id),
+                                            descripcion,      
+                                            
+                                            id_materia,        
+                                            id_grupo,         
+                                            id_profesor,        
+                                            
+                                            id_parcial,        
+                                            id_periodo         
                                         };
 
-                                        console.log('+++++++++++++++++++++++++++PonderadorInput : ', PonderadorInput );
+                                        console.log('+++++++++++++++++++++++++++ActividadInput : ', ActividadInput );
 
-                                        crearActualizarPonderador({
-                                            variables: { PonderadorInput }
+                                        crearActualizarActividad({
+                                            variables: { ActividadInput }
                                         })
                                     }
                                 } >
