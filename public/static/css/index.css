@@ -1,0 +1,20 @@
+
+.usuario-logueado {
+  color: var(--blanco);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.usuario-logueado span {
+  font-weight: 50;
+}
+
+#contenidos {
+    display: table-row;
+}
+#columna1, #columna2, #columna3 {
+    display: table-cell;
+    border: 1px solid #000;
+    vertical-align: middle;
+    padding: 5px;
+}

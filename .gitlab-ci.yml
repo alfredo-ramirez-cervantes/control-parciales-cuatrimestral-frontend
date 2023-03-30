@@ -1,3 +1,7 @@
-include:
-  - template: Auto-DevOps.gitlab-ci.yml
-  - project: desarrollo/ci-cd
+  template: Auto-DevOps.gitlab-ci.yml
+
+variables: 
+  # CI/CD
+  APP: sisdo-frontend
+  TEST_DISABLED: "true"
+  REPLICAS: 2 
