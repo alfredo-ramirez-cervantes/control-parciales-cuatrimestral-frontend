@@ -22,6 +22,7 @@ import { Card }                         from 'primereact/card';
 
 import DescripcionCatGenerico           from  '../ui/DescripcionCatGenerico';
 
+import CrearActividad                   from  './CrearActividad';
 import RegistrarAsistencia              from  './RegistrarAsistencia';
 import RegistrarCalificacion            from  './RegistrarCalificacion';
 
@@ -136,8 +137,10 @@ const Resumen = (props) => {
     const [selectedIdMateria, setSelectedIdMateria] = useState(null);
     const [selectedIdGrupo, setSelectedIdGrupo]     = useState(null);
     const [selectedIdParcial, setSelectedIdParcial] = useState(null);
-    const [displayRegistrarAsistencia, setDisplayRegistrarAsistencia] = useState(null);
-    const [displayRegistrarCalificacion, setDisplayRegistrarCalificacion] = useState(null);
+
+    const [displayNuevaActividad, setDisplayNuevaActividad]                 = useState(null);
+    const [displayRegistrarAsistencia, setDisplayRegistrarAsistencia]       = useState(null);
+    const [displayRegistrarCalificacion, setDisplayRegistrarCalificacion]   = useState(null);
 
     let idProfesorSesion = null;
 
@@ -184,18 +187,18 @@ const Resumen = (props) => {
         color: 'black'
     }; 
 
-    const openNew = () => {
-        setProductDialog(true);
-    }
+    // const openNew = () => {
+    //     setDisplayNuevaActividad(true);
+    // }
 
     const rightToolbarTemplate = () => {
         return (
             <Fragment>
                     <Button type        ="button" 
-                            label       ="Nuevo Ponderador" 
+                            label       ="Nueva Actividad" 
                             icon        ="pi pi-plus" 
                             className   ="p-button-success mr-2" 
-                            onClick     ={openNew} />
+                            onClick     ={ onClickNuevaActividad} />
             </Fragment>
         )
     }       
@@ -217,11 +220,17 @@ const Resumen = (props) => {
     }
  
     const seleccionarParcial = seleccion => {
+        console.log('++++++++++++seleccionvalue: ' , seleccion.value);
         setSelectedIdParcial(seleccion.value);
 
         if (typeof window !== 'undefined') {
             sessionStorage.setItem('id_parcial', seleccion.value);
         }
+    }
+ 
+    const seleccionarParcial2 = seleccion => {
+        console.log('++++++++++++seleccion: ' , seleccion);
+        setSelectedIdParcial(seleccion);
     }
     
     const colAsisteniaParcial = (matricula) => {
@@ -513,6 +522,14 @@ const Resumen = (props) => {
                 </div>
     }
 
+    const onClickNuevaActividad = () => {
+        setDisplayNuevaActividad(true);
+    }   
+
+    const onHideNuevaActividad = () => {
+        setDisplayNuevaActividad(false);
+    }  
+    
     const onClickRegistrarAsistencia = () => {
         setDisplayRegistrarAsistencia(true);
     }   
@@ -656,10 +673,26 @@ const Resumen = (props) => {
                 </div>
             </div>
 
+            <Dialog     header      ="Nuevo ponderador" 
+                        style       ={{ width: '50vw' }} 
+                        visible     ={displayNuevaActividad}
+                        modal 
+                        position    ='right' 
+                        footer      ={renderFooter} 
+                        onHide      ={() => onHideNuevaActividad()}
+                        draggable   ={false} 
+                        resizable   ={false}
+            >
+                <CrearActividad                              
+                    onHideNuevaActividad ={onHideNuevaActividad} 
+                    refetch = {refetchAlumnos}/>
+            </Dialog>
+
             <Dialog     header      ="Registrar asistencia" 
                         style       ={{ width: '30vw' }} 
                         visible     ={displayRegistrarAsistencia}
                         modal 
+                        position    ='right' 
                         footer      ={renderFooter} 
                         onHide      ={() => onHideRegistrarAsistencia()}
                         draggable   ={false} 
@@ -675,6 +708,7 @@ const Resumen = (props) => {
                         style       ={{ width: '30vw' }} 
                         visible     ={displayRegistrarCalificacion}
                         modal 
+                        position    ='right' 
                         footer      ={renderFooter} 
                         onHide      ={() => onHideRegistrarCalificacion()}
                         draggable   ={false} 
@@ -682,7 +716,8 @@ const Resumen = (props) => {
             >
                 <RegistrarCalificacion                              
                     onHideRegistrarCalificacion ={onHideRegistrarCalificacion} 
-                    refetch = {refetchAlumnos}
+                    refetch = {refetchAlumnos} 
+                    seleccionarParcial2 = {seleccionarParcial2}
                 />
             </Dialog>  
                       
