@@ -56,8 +56,8 @@ const formik = useFormik({
 
     initialValues: {
 
-        id:             0
-        ,calificacion:  ''
+        id:             sessionStorage.getItem('id_act_alumno') == 'null' ? 0 : Number(sessionStorage.getItem('id_act_alumno'))
+        ,calificacion:  sessionStorage.getItem('calificacion') == 'null' ? '' : Number(sessionStorage.getItem('calificacion'))
         ,modificar:     false
     }, 
 

@@ -64,8 +64,8 @@ const formik = useFormik({
 
     initialValues: {
 
-        id:             0
-        ,asistencia:  ''
+        id:             sessionStorage.getItem('id_sistencia') == 'null' ? 0 : Number(sessionStorage.getItem('id_sistencia'))
+        ,asistencia:    sessionStorage.getItem('asistencia') == 'null' ? '' : sessionStorage.getItem('asistencia')
         ,modificar:     false
     }, 
 

@@ -95,7 +95,8 @@ const QUERY_ASISTENCIA_PARCIAL = gql`
             id_parcial_periodo
             dia 
             asistencia   
-            id_alumno   			
+            id_alumno
+            id_sistencia   			
         }
     }
 `;
@@ -124,7 +125,8 @@ const QUERY_ACTIVIDAD_BY_ALUMNO = gql`
 			id              
 			id_parcial_periodo
 			id_ponderador   
-			descripcion      
+			descripcion  
+            id_act_alumno    
 			id_alumno       
 			calificacion     			
 		}
@@ -272,6 +274,8 @@ const Resumen = (props) => {
                                                         onClickRegistrarAsistencia();
                                                             if (typeof window !== 'undefined') {
                                                                 sessionStorage.setItem('id_dia',        item.id);
+                                                                sessionStorage.setItem('id_sistencia',  item.id_sistencia);
+                                                                sessionStorage.setItem('asistencia',    item.asistencia);
                                                                 sessionStorage.setItem('id_alumno',     matricula);  
                                                             }
                                                         }
@@ -333,6 +337,8 @@ const Resumen = (props) => {
                                                                     sessionStorage.setItem('id_alumno',     matricula);
                                                                     sessionStorage.setItem('id_actividad',  item.id);
                                                                     sessionStorage.setItem('actividadDescripcion', item.descripcion);
+                                                                    sessionStorage.setItem('id_act_alumno', item.id_act_alumno);
+                                                                    sessionStorage.setItem('calificacion', item.calificacion);                                                                    
                                                                 }
 
                                                             }
@@ -394,6 +400,8 @@ const Resumen = (props) => {
                                                                     sessionStorage.setItem('id_alumno',     matricula);
                                                                     sessionStorage.setItem('id_actividad',  item.id);
                                                                     sessionStorage.setItem('actividadDescripcion', item.descripcion);
+                                                                    sessionStorage.setItem('id_act_alumno', item.id_act_alumno);
+                                                                    sessionStorage.setItem('calificacion', item.calificacion);          
                                                                 }
 
                                                             }
@@ -455,6 +463,8 @@ const Resumen = (props) => {
                                                                     sessionStorage.setItem('id_alumno',     matricula);
                                                                     sessionStorage.setItem('id_actividad',  item.id);
                                                                     sessionStorage.setItem('actividadDescripcion', item.descripcion);
+                                                                    sessionStorage.setItem('id_act_alumno', item.id_act_alumno);
+                                                                    sessionStorage.setItem('calificacion', item.calificacion);          
                                                                 }
 
                                                             }
@@ -699,8 +709,8 @@ const Resumen = (props) => {
                         resizable   ={false}
             >
                 <RegistrarAsistencia                              
-                    onHideRegistrarAsistencia ={onHideRegistrarAsistencia} 
-                    refetch = {refetchAlumnos}
+                    onHideRegistrarAsistencia   ={onHideRegistrarAsistencia} 
+                    refetch                     = {refetchAlumnos}
                 />
             </Dialog>  
 
@@ -716,8 +726,8 @@ const Resumen = (props) => {
             >
                 <RegistrarCalificacion                              
                     onHideRegistrarCalificacion ={onHideRegistrarCalificacion} 
-                    refetch = {refetchAlumnos} 
-                    seleccionarParcial2 = {seleccionarParcial2}
+                    refetch                     = {refetchAlumnos} 
+                    seleccionarParcial2         = {seleccionarParcial2}
                 />
             </Dialog>  
                       
